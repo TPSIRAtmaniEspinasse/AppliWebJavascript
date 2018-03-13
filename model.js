@@ -4,30 +4,31 @@ function Drawing() {
     // Array - forms list 
     this.forms = new Array();
     
+    this.getForms = function() {
+        return this.forms;
+    }.bind(this);
+    
     // Add a form in the array 
     this.addForm = function(form) {
         this.forms.push(form);
-    };
+    }.bind(this);
     
     // Remove a form using the index
     this.removeForm = function(index) {
         this.forms.splice(index,1);
-    };
+    }.bind(this);
     
-    this.getForms = function(){
-    	return forms;
-    }
 };
     
 // Forme
-function Form(colour, linethickness) {
-    this.colour = colour;
-    this.linethickness = linethickness;
+function Form(epaisseur,couleur) {
+    this.couleur = couleur;
+    this.epaisseur = epaisseur;
 };
 
 // Rectangle    
-function Rectangle(topleftcornerX, topleftcornerY, width, height, colour, linethickness) {
-    Form.call(this, colour, linethickness);
+function Rectangle(topleftcornerX, topleftcornerY, width, height, epaisseur, couleur) {
+    Form.call(this, epaisseur, couleur);
 
     this.topleftcornerX = topleftcornerX;
     this.topleftcornerY = topleftcornerY;
@@ -36,11 +37,21 @@ function Rectangle(topleftcornerX, topleftcornerY, width, height, colour, lineth
 };
 
 // Line
-function Line(coordX1, coordY1, coordX2, coordY2, colour, linethickness) {
-    Form.call(this, colour, linethickness);
+function Line(initX, initY, finalX, finalY, epaisseur, couleur) {
+    Form.call(this,epaisseur, couleur);
     
-    this.coordX1 = coordX1;
-    this.coordY1 = coordY1;
-    this.coordX2 = coordX2;
-    this.coordY2 = coordY2;
+    this.initX = initX;
+    this.initY = initY;
+    this.finalX = finalX;
+    this.finalY = finalY;
+};
+
+// Square    
+function Square(topleftcornerX, topleftcornerY, width, height, epaisseur, couleur) {
+    Form.call(this, epaisseur, couleur);
+
+    this.topleftcornerX = topleftcornerX;
+    this.topleftcornerY = topleftcornerY;
+    this.width = height;
+    this.height = height;
 };

@@ -1,11 +1,11 @@
 
-var editingMode = { rect: 0, line: 1 };
+var editingMode = { rect: 0, line: 1, square: 2 };
 
 function Pencil(ctx, drawing, canvas) {
 	this.currEditingMode = editingMode.line;
 	this.currLineWidth = 5;
 	this.currColour = '#000000';
-	this.currentShape = 0;
+	this.currentShape = 1;
 
 	// Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
 
@@ -18,6 +18,7 @@ function Pencil(ctx, drawing, canvas) {
         
         var butRect = document.getElementById('butRect');
 		var butLine = document.getElementById('butLine');
+		var butSquare = document.getElementById('butSquare');
 		var spinnerWidth = document.getElementById('spinnerWidth');
 		var colour = document.getElementById('colour');
         
@@ -29,6 +30,8 @@ function Pencil(ctx, drawing, canvas) {
 			this.currEditingMode = editingMode.rect;
 		} else if (butLine.checked) {
 			this.currEditingMode = editingMode.line;
+		} else if (butSquare.checked) {
+			this.currEditingMode = editingMode.square;
 		}
 
 		// Creation of the selected form
@@ -47,6 +50,14 @@ function Pencil(ctx, drawing, canvas) {
                 this.currentShape = new Line(DnD.initX, DnD.initY,DnD.finalX, DnD.finalY, this.currLineWidth, this.currColour);
                 break;
             }
+                
+            // Square creation
+            case editingMode.rect: {
+                var width = DnD.finalX - DnD.initX;
+                var height =  DnD.finalY - DnD.initY;
+                this.currentShape = new Square(DnD.initX, DnD.initY,width, height, this.currLineWidth, this.currColour);
+                break;
+            }
 		}
 	}.bind(this);
     
@@ -61,6 +72,11 @@ function Pencil(ctx, drawing, canvas) {
 		} else if (butLine.checked) {
 			// Line creation
 			this.currentShape = new Line(DnD.initX, DnD.initY, DnD.finalX, DnD.finalY, this.currLineWidth, this.currColour);
+		} else if (butSquare.checked) {
+			// Rectangle creation
+			var width = DnD.finalX - DnD.initX;
+			var height = DnD.finalY - DnD.initY;
+			this.currentShape = new Square(DnD.initX, DnD.initY, width, height, this.currLineWidth, this.currColour);
 		}
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -80,6 +96,11 @@ function Pencil(ctx, drawing, canvas) {
 		} else if (butLine.checked) {
 			// Line creation
 			this.currentShape = new Line(DnD.initX, DnD.initY, DnD.finalX, DnD.finalY, this.currLineWidth, this.currColour);
+		}else if (butSquare.checked) {
+			// Rectangle creation
+			var width = DnD.finalX - DnD.initX;
+			var height = DnD.finalY - DnD.initY;
+			this.currentShape = new Square(DnD.initX, DnD.initY, width, height, this.currLineWidth, this.currColour);
 		}
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
